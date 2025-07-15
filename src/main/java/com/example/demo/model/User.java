@@ -10,11 +10,12 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "TBL_USERS")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @NotBlank(message = "The first name is required")
     @Column
