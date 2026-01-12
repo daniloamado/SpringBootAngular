@@ -1,4 +1,4 @@
-package com.example.demo.web;
+package com.example.demo.controller;
 
 import com.example.demo.exception.RecordNotFoundException;
 import com.example.demo.model.User;
@@ -51,6 +51,13 @@ public class UserController {
 
         log.info("Deleting user id: {}", id);
         userService.deleteUserById(id);
+    }
+
+    @GetMapping(value = "/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public User getUser(@PathVariable Long id) throws RecordNotFoundException {
+        log.info("getting user id: {}", id);
+        return userService.findUserById(id);
     }
 
 }
