@@ -24,8 +24,7 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public User registerUser(@Valid @RequestBody User user) {
 
-        log.info("registering user: {} ", user.getUsername());
-
+        log.info("Registering user: {} ", user.getUsername());
         return userService.createOrUpdateUser(user);
     }
 
@@ -33,7 +32,7 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     public List<User> findAllUser() {
 
-        log.info("finding all users");
+        log.info("Finding all users");
         return userService.findAll();
     }
 
@@ -56,7 +55,7 @@ public class UserController {
     @GetMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public User getUser(@PathVariable Long id) throws RecordNotFoundException {
-        log.info("getting user id: {}", id);
+        log.info("Getting user id: {}", id);
         return userService.findUserById(id);
     }
 

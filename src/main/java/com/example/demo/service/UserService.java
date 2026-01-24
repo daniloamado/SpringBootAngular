@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.exception.RecordNotFoundException;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
