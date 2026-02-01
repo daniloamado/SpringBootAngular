@@ -2,7 +2,6 @@ package com.example.demo.config;
 
 import com.example.demo.service.AuthenticationService;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,12 +16,16 @@ import java.io.PrintWriter;
 
 public class AuthenticationFilter extends GenericFilterBean {
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    private static final String ACTUATOR = "/actuator";
 
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException {
         try {
-            Authentication authentication = AuthenticationService.getAuthentication((HttpServletRequest) request);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String path = ((HttpServletRequest) request).getRequestURI();
+            if (!path.toLowerCase().contains(ACTUATOR)) {
+                Authentication authentication = AuthenticationService.getAuthentication((HttpServletRequest) request);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
             chain.doFilter(request, response);
         } catch (Exception exp) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
