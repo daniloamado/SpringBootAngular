@@ -3,10 +3,10 @@ package com.example.demo.service;
 import com.example.demo.exception.RecordNotFoundException;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
-import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +19,15 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private EnrollmentService enrollmentService;
+
     public User createOrUpdateUser(User entity) {
 
         log.info("Creating or updating user");
         if (entity.getId() == null) {
             entity = repository.save(entity);
+            enrollmentService.enroll("user-enrollment", entity);
 
             return entity;
         } else {
@@ -39,9 +43,11 @@ public class UserService {
                 newUser.setUsername(entity.getUsername());
 
                 repository.save(newUser);
+                enrollmentService.enroll("user-enrollment", newUser);
                 return newUser;
             } else {
                 entity = repository.save(entity);
+                enrollmentService.enroll("user-enrollment", entity);
 
                 return entity;
             }
