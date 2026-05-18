@@ -68,6 +68,7 @@ public class UserService {
         if (user.isPresent()) {
             return user.get();
         } else {
+            log.error("Error finding user by id: {}", id);
             throw new RecordNotFoundException("No user record exists for given id");
         }
 
@@ -81,6 +82,7 @@ public class UserService {
         if (user.isPresent()) {
             repository.deleteById(id);
         } else {
+            log.error("Error deleting user by id: {}", id);
             throw new RecordNotFoundException("No user record exists for given id");
         }
     }

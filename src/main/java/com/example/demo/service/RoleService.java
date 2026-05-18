@@ -51,6 +51,7 @@ public class RoleService {
         if (role.isPresent()) {
             return role.get();
         } else {
+            log.error("Error finding role by id: {}", id);
             throw new RecordNotFoundException("No role record exists for given id");
         }
     }
@@ -62,6 +63,7 @@ public class RoleService {
         if (role.isPresent()) {
             roleRepository.deleteById(id);
         } else {
+            log.error("Error deleting role by id: {}", id);
             throw new RecordNotFoundException("No role record exists for given id");
         }
     }
